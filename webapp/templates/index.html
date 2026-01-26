@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steel Bulls - Shot Planner 2026</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/logo.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bulls: {
+                            red: '#D91F26',
+                            dark: '#000000',
+                            panel: '#1E293B',
+                            steel: '#94A3B8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="min-h-screen py-8 px-4 text-slate-100">
+    <div class="max-w-7xl mx-auto space-y-6">
+        <!-- Header -->
+        <header>
+            <div class="header-left">
+                <img src="/static/images/logo.png" alt="Steel Bulls Logo" class="team-logo-small">
+                <div class="header-title-container">
+                    <span class="main-title">STEEL BULLS 2026</span>
+                    <span class="sub-title">REBUILT™</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Left Column: Trajectory (Larger) -->
+            <div class="lg:col-span-2 glass-panel rounded-2xl shadow-2xl shadow-black/20 overflow-hidden flex flex-col">
+                <div class="px-5 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-8 bg-bulls-red rounded-full"></div>
+                        <span class="font-bold text-slate-200 text-sm uppercase tracking-wider">Drag dot to change shoot
+                            position</span>
+                    </div>
+                    <span class="text-xs text-bulls-steel bg-slate-800 px-2 py-1 rounded border border-slate-700">Drag
+                        to Position</span>
+                </div>
+
+                <div class="relative w-full flex-grow min-h-[400px]">
+                    <div id="traj-plot" class="absolute inset-0 w-full h-full"></div>
+                </div>
+            </div>
+
+            <!-- Right Column: Controls & Analytics -->
+            <div class="space-y-6 flex flex-col">
+
+                <!-- Polar Plot -->
+                <div class="glass-panel rounded-2xl shadow-xl overflow-hidden flex flex-col">
+                    <div
+                        class="px-5 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                        <span class="font-bold text-slate-200 text-sm uppercase tracking-wider">Shooter
+                            Configuration</span>
+                        <span class="text-xs text-bulls-steel">Angle vs Speed</span>
+                    </div>
+                    <div class="p-2 flex justify-center bg-slate-900/30">
+                        <div id="polar-plot" class="w-full h-[350px]"></div>
+                    </div>
+                </div>
+
+                <!-- Budget Plot -->
+                <div class="glass-panel rounded-2xl shadow-xl overflow-hidden flex flex-col flex-grow">
+                    <div
+                        class="px-5 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                        <span class="font-bold text-slate-200 text-sm uppercase tracking-wider">Velocity Margin</span>
+                        <span class="text-xs text-green-400 font-mono" id="budget-value">-- m/s</span>
+                    </div>
+                    <div class="p-4 flex-grow flex items-center justify-center">
+                        <div id="budget-plot" class="w-full h-[200px]"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="text-center text-slate-600 text-xs pt-8">
+            <p>SESI SENAI STEEL BULLS 9460 • FRC 2026</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
