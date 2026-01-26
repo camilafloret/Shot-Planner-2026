@@ -52,7 +52,7 @@ async function init() {
         x: [state.x],
         y: [state.y],
         mode: 'markers',
-        marker: { color: 'black', size: 12, symbol: 'circle' },
+        marker: { color: 'white', size: 12, symbol: 'circle' },
         type: 'scatter',
         name: 'Shooter'
     };
@@ -108,16 +108,32 @@ async function init() {
     };
 
     layout.traj = {
-        title: { text: '', font: { color: '#e2e8f0' } },
-        xaxis: { range: [-6.2, 1], title: 'x (m)', fixedrange: true, gridcolor: '#334155', zerolinecolor: '#475569' },
-        yaxis: { range: [-0.1, 4], title: 'y (m)', scaleanchor: 'x', scalemaker: 1, fixedrange: true, gridcolor: '#334155', zerolinecolor: '#475569' },
-        shapes: [floorShape, hubShape, rimShape],
-        margin: { t: 10, b: 30, l: 30, r: 10 },
+        title: { text: '', font: { color: '#f8fafc' } },
+        xaxis: {
+            range: [-6.2, 1],
+            title: { text: 'Distance (m)', font: { size: 10, color: '#94a3b8' } },
+            fixedrange: true,
+            gridcolor: 'rgba(51, 65, 85, 0.5)',
+            zerolinecolor: '#475569',
+            tickfont: { size: 10, color: '#94a3b8' }
+        },
+        yaxis: {
+            range: [-0.1, 4],
+            title: { text: 'Height (m)', font: { size: 10, color: '#94a3b8' } },
+            scaleanchor: 'x',
+            scalemaker: 1,
+            fixedrange: true,
+            gridcolor: 'rgba(51, 65, 85, 0.5)',
+            zerolinecolor: '#475569',
+            tickfont: { size: 10, color: '#94a3b8' }
+        },
+        shapes: [floorShape, posBoxShape, hubShape, rimShape],
+        margin: { t: 20, b: 40, l: 40, r: 20 },
         hovermode: false,
         dragmode: false,
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
-        font: { color: '#e2e8f0' }
+        font: { color: '#f8fafc', family: 'Montserrat' }
     };
 
     Plotly.newPlot(trajDiv, [heatmapTrace, trajTrace, shooterTrace], layout.traj, { displayModeBar: false });
@@ -146,20 +162,29 @@ async function init() {
     layout.polar = {
         polar: {
             bgcolor: 'rgba(0,0,0,0)',
-            radialaxis: { range: [0, 15], visible: true, gridcolor: '#334155', linecolor: '#475569' },
+            radialaxis: {
+                range: [0, 15],
+                visible: true,
+                gridcolor: 'rgba(51, 65, 85, 0.5)',
+                linecolor: '#475569',
+                tickfont: { size: 9, color: '#94a3b8' },
+                angle: 45,
+                tickangle: 0
+            },
             angularaxis: {
                 direction: "counterclockwise",
                 rotation: 0,
-                gridcolor: '#334155',
-                linecolor: '#475569'
+                gridcolor: 'rgba(51, 65, 85, 0.5)',
+                linecolor: '#475569',
+                tickfont: { size: 10, color: '#94a3b8' }
             }
         },
-        margin: { t: 20, b: 20, l: 20, r: 20 },
+        margin: { t: 30, b: 30, l: 30, r: 30 },
         dragmode: false,
         hovermode: 'closest',
         showlegend: false,
         paper_bgcolor: 'rgba(0,0,0,0)',
-        font: { color: '#e2e8f0' }
+        font: { color: '#f8fafc', family: 'Montserrat' }
     };
 
     Plotly.newPlot(polarDiv, [zoneTrace, curStateTrace], layout.polar, { displayModeBar: false });
@@ -201,15 +226,22 @@ async function init() {
 
     layout.budget = {
         title: { text: '', font: { size: 1 } },
-        xaxis: { range: [0, 15], title: 'Speed (m/s)', fixedrange: true, gridcolor: '#334155', color: '#e2e8f0' },
-        yaxis: { showticklabels: false, range: [-1, 1], fixedrange: true, gridcolor: '#334155' },
-        margin: { t: 10, b: 30, l: 10, r: 10 },
+        xaxis: {
+            range: [0, 15],
+            title: { text: 'Speed (m/s)', font: { size: 10, color: '#94a3b8' } },
+            fixedrange: true,
+            gridcolor: 'rgba(51, 65, 85, 0.5)',
+            color: '#94a3b8',
+            tickfont: { size: 10 }
+        },
+        yaxis: { showticklabels: false, range: [-1, 1], fixedrange: true, gridcolor: 'rgba(51, 65, 85, 0.5)' },
+        margin: { t: 10, b: 30, l: 30, r: 30 },
         height: 150,
         dragmode: false,
         showlegend: false,
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
-        font: { color: '#e2e8f0' }
+        font: { color: '#f8fafc', family: 'Montserrat' }
     };
 
     Plotly.newPlot(budgetDiv, [rangeTrace, currentVTrace], layout.budget, { displayModeBar: false });
@@ -490,10 +522,11 @@ async function updateData() {
         ];
 
         const fbRange = (data.budget.max - data.budget.min).toFixed(2);
+        document.getElementById('budget-value').innerText = `±${(fbRange / 2).toFixed(2)} m/s`;
 
         Plotly.relayout(budgetDiv, {
             'shapes': budgetShapes,
-            'title.text': `Velocity Error Budget: Total tolerance = ${fbRange} m/s`
+            'title.text': '' // Clear title as we use the budget-value span now
         });
 
     } catch (e) {

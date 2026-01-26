@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Montserrat:wght@400;700;900&display=swap"
+        rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -20,9 +23,6 @@
                             panel: '#1E293B',
                             steel: '#94A3B8',
                         }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
@@ -33,12 +33,22 @@
 <body class="min-h-screen py-8 px-4 text-slate-100">
     <div class="max-w-7xl mx-auto space-y-6">
         <!-- Header -->
-        <header>
-            <div class="header-left">
-                <img src="/static/images/logo.png" alt="Steel Bulls Logo" class="team-logo-small">
-                <div class="header-title-container">
-                    <span class="main-title">STEEL BULLS 2026</span>
-                    <span class="sub-title">REBUILT™</span>
+        <header class="tech-header glass-panel rounded-2xl">
+            <div class="logo-box">
+                <img src="/static/images/logo.png" alt="Steel Bulls Logo" class="team-logo">
+                <div class="header-text">
+                    <span class="team-name">STEEL BULLS <span class="year">2026</span></span>
+                    <span class="game-name">REBUILT™ — MISSION CONTROL</span>
+                </div>
+            </div>
+            <div class="hidden md:flex gap-4">
+                <div class="status-pill flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    <span class="text-xs text-slate-400">System Ready</span>
+                </div>
+                <div class="status-pill flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-bulls-red"></div>
+                    <span class="text-xs text-slate-400">Auto-Calc ON</span>
                 </div>
             </div>
         </header>
@@ -54,8 +64,7 @@
                         <span class="font-bold text-slate-200 text-sm uppercase tracking-wider">Drag dot to change shoot
                             position</span>
                     </div>
-                    <span class="text-xs text-bulls-steel bg-slate-800 px-2 py-1 rounded border border-slate-700">Drag
-                        to Position</span>
+                    <span class="text-xs text-bulls-steel">Drag to Position</span>
                 </div>
 
                 <div class="relative w-full flex-grow min-h-[400px]">
@@ -68,13 +77,12 @@
 
                 <!-- Polar Plot -->
                 <div class="glass-panel rounded-2xl shadow-xl overflow-hidden flex flex-col">
-                    <div
-                        class="px-5 py-4 border-b border-slate-700/50 bg-slate-900/50 flex justify-between items-center">
+                    <div class="px-5 py-4 border-b border-slate-700/50 flex justify-between items-center">
                         <span class="font-bold text-slate-200 text-sm uppercase tracking-wider">Shooter
                             Configuration</span>
                         <span class="text-xs text-bulls-steel">Angle vs Speed</span>
                     </div>
-                    <div class="p-2 flex justify-center bg-slate-900/30">
+                    <div class="p-2 flex justify-center">
                         <div id="polar-plot" class="w-full h-[350px]"></div>
                     </div>
                 </div>
@@ -93,10 +101,6 @@
 
             </div>
         </div>
-
-        <footer class="text-center text-slate-600 text-xs pt-8">
-            <p>SESI SENAI STEEL BULLS 9460 • FRC 2026</p>
-        </footer>
     </div>
 
     <script src="/static/js/main.js"></script>
