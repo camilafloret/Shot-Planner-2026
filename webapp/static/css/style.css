@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #000000;
+    /* Pure Black as requested */
+    color: #f1f5f9;
+    /* Slate 100 */
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.glass-panel {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.plot-container {
+    width: 90vw;
+    height: 35vh;
+    background: #000000;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#polar-plot {
+    height: 40vh;
+    width: 40vh;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+/* Header Specifics */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.team-logo-small {
+    height: 50px;
+    width: auto;
+}
+
+.header-title-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #D91F26;
+    /* Steel Bulls Red */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sub-title {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.header-right {
+    display: flex;
+    gap: 15px;
+}
+
+.status-box {
+    background-color: #000;
+    border: 2px solid;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    min-width: 180px;
+    text-align: center;
+}
+
+.status-box.orange {
+    border-color: #F59E0B;
+}
+
+.status-box.green {
+    border-color: #10B981;
+}
+
+.status-box.red {
+    border-color: #EF4444;
+}
+
+.status-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.status-value {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* Make plots unselectable */
+.js-plotly-plot .plotly .draglayer {
+    cursor: crosshair !important;
+    touch-action: none;
+    /* KEY for touchscreen: prevents browser scrolling on drag */
+}
