@@ -1,4 +1,4 @@
-# 🎯 Steel Bulls Shot Planner 2026 - REBUILT™
+# Steel Bulls Shot Planner 2026 - REBUILT™
 
 O **Shot Planner 2026** é uma ferramenta de simulação física avançada adaptada para a equipe **Steel Bulls (FRC 9460)**. Ela permite analisar e planejar trajetórias de lançamento para o desafio da temporada 2026, ajudando a identificar as configurações ideais de velocidade, ângulo e posicionamento do robô.
 
