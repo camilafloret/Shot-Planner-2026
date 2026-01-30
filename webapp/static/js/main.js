@@ -21,6 +21,8 @@ let updatePending = false;
 const trajDiv = document.getElementById('traj-plot');
 const polarDiv = document.getElementById('polar-plot');
 const budgetDiv = document.getElementById('budget-plot');
+const heightSlider = document.getElementById('height-slider');
+const heightInput = document.getElementById('height-input');
 
 async function init() {
     const response = await fetch('/init_data');
@@ -78,6 +80,17 @@ async function init() {
         fillcolor: 'rgba(255, 255, 0, 0.5)' // Yellow semi-transparent
     };
 
+    const robotShape = {
+        type: 'rect',
+        x0: state.x - 0.4,
+        y0: 0,
+        x1: state.x + 0.4,
+        y1: state.y,
+        name: 'robot',
+        line: { color: '#94a3b8', width: 1 },
+        fillcolor: 'rgba(148, 163, 184, 0.2)'
+    };
+
     const hubShape = {
         type: 'rect',
         x0: -1.02,
@@ -127,7 +140,7 @@ async function init() {
             zerolinecolor: '#475569',
             tickfont: { size: 10, color: '#94a3b8' }
         },
-        shapes: [floorShape, posBoxShape, hubShape, rimShape],
+        shapes: [floorShape, posBoxShape, hubShape, rimShape, robotShape],
         margin: { t: 20, b: 40, l: 40, r: 20 },
         hovermode: false,
         dragmode: false,
@@ -327,6 +340,19 @@ function setupInteractions() {
         if (isDraggingBudget) handleBudgetMove(e.touches[0]);
         e.preventDefault();
     });
+
+    // Height Controls
+    heightSlider.addEventListener('input', (e) => {
+        state.y = parseFloat(e.target.value);
+        heightInput.value = state.y.toFixed(2);
+        scheduleUpdate();
+    });
+
+    heightInput.addEventListener('change', (e) => {
+        state.y = parseFloat(e.target.value);
+        heightSlider.value = state.y;
+        scheduleUpdate();
+    });
 }
 
 function handleTrajMove(e) {
@@ -343,7 +369,11 @@ function handleTrajMove(e) {
 
     // Clamp if needed
     state.x = Math.max(-6.2, Math.min(1, dataX));
-    state.y = Math.max(0, Math.min(4, dataY));
+    // state.y now strictly follows the robot height input or is fixed
+    // unless we want to allow dragging Y to change robot height:
+    state.y = Math.max(0.1, Math.min(1.5, dataY));
+    heightSlider.value = state.y;
+    heightInput.value = state.y.toFixed(2);
 
     scheduleUpdate();
 }
@@ -467,7 +497,11 @@ async function updateData() {
                 'shapes[1].x1': maxX,
                 'shapes[1].y0': 0,
                 'shapes[1].y1': 3.0,
-                'shapes[1].fillcolor': `rgba(255, 255, 0, ${opacity})`
+                'shapes[1].fillcolor': `rgba(255, 255, 0, ${opacity})`,
+                // Robot Shape (Index 4)
+                'shapes[4].x0': state.x - 0.4,
+                'shapes[4].x1': state.x + 0.4,
+                'shapes[4].y1': state.y
             };
 
             // Update title with stats
