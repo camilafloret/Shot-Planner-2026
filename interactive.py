@@ -31,8 +31,14 @@ def get_ang_speed_space(xpos, ypos, doShow=False):
 
     f_far_squared = get_speed_func_squared((xpos, ypos), (rim_width / 2, rim_height))
     f_near_squared = get_speed_func_squared((xpos, ypos), (-rim_width / 2, rim_height))
-    f_squared_diff = lambda a: f_far_squared(a) - f_near_squared(a)
-    intersection = fsolve(f_squared_diff, radians(85))[0]
+    dy = rim_height - ypos
+    dx_far = (rim_width / 2) - xpos
+    dx_near = (-rim_width / 2) - xpos
+    
+    intersection = radians(85)
+    if abs(dx_far) > 1e-4 and abs(dx_near) > 1e-4:
+        tan_int = dy * (1/dx_far + 1/dx_near)
+        intersection = np.arctan(tan_int)
 
     ang_lower_bound = max(intersection, radians(5))
     ang_upper_bound = radians(85)
